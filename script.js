@@ -15,9 +15,14 @@ function multiply(a,b) {
   return Math.round((a * b) * 10000)/10000;
 }
 
+let zeroError = document.createElement("span");
+zeroError.classList.add("error")
+zeroError.textContent = "Can't divide by zero, you silly thing";
+
 function divide(a,b) {
   if (b === 0) {
-    return "Can't divide by zero, you silly thing";
+    
+    return null;
   } else {
     return Math.round((a / b) * 10000)/10000;
   }
@@ -30,7 +35,7 @@ function divide(a,b) {
  * @param {Operator} operator 
  * @param {number} num1 
  * @param {number} num2 
- * @returns {number} 
+ * @returns {number|null} 
  */
 function operate(operator, num1, num2) {
   if (num2 === undefined) {
@@ -67,15 +72,9 @@ let secondNum = "";
  */
 function handleNumberClick(event) {
   if (op === null) {
-    // if (firstNum.length > 11) {
-    //   return;
-    // }
     firstNum = firstNum + event.target.textContent;
     displayValue(firstNum);
   } else {
-    // if (secondNum.length > 11) {
-    //   return;
-    // }
     secondNum = secondNum + event.target.textContent;
     displayValue(secondNum);
   }
@@ -146,6 +145,7 @@ function handleOperatorClick(event) {
 // put an event listener on every element of the .number-button class
 for (let elem of document.querySelectorAll(".number-button")) {
   elem.addEventListener("click",handleNumberClick);
+  elem.addEventListener("keydown",handleNumberClick);
 }
 
 // put an event listener on every element of the .operator-button class
@@ -164,8 +164,16 @@ function handleEqualsClick(event) {
     return;
   }
   let answer = operate(op, Number(firstNum), Number(secondNum));
+  if (answer === null) {
+    displayValue("");
+    displayBox.appendChild(zeroError);
+    firstNum = "";
+    secondNum = "";
+    op = null;
+  } else {
   displayValue(answer);
   playSound(event);
+  }
 }
 
 // put an event listener on the equals button
@@ -175,6 +183,7 @@ equals.addEventListener("click", handleEqualsClick);
 // put an event listener on the dot button 
 let dot = document.getElementById("dot-button");
 dot.addEventListener("click", handleDotClick);
+
 
 /**
  * determines whether or not to add the dot to the string
@@ -217,3 +226,15 @@ function playSound(e) {
   audio.currentTime = 0;
   audio.play();
 }
+
+// function keyCorrespond(event) {
+//   if (event.target.classList )
+// }
+
+window.addEventListener('keydown', function(e){
+  const elem = document.querySelector(`button[data-key='${e.key}']`); 
+  if (elem) {
+    elem.click();
+    //elem?.click() alternative way to write
+  }
+});
