@@ -67,9 +67,15 @@ let secondNum = "";
  */
 function handleNumberClick(event) {
   if (op === null) {
+    // if (firstNum.length > 11) {
+    //   return;
+    // }
     firstNum = firstNum + event.target.textContent;
     displayValue(firstNum);
   } else {
+    // if (secondNum.length > 11) {
+    //   return;
+    // }
     secondNum = secondNum + event.target.textContent;
     displayValue(secondNum);
   }

@@ -29,7 +29,6 @@ h1 {
   #calc-body {
     width: 80%;
   }
-
 }
 
 
@@ -73,8 +72,12 @@ button{
   align-items: flex-end;
   font-family: monospace;
   font-size: 4em;
+  overflow: auto;
+  width: 100%;
 }
 
 #display > span {
   padding: 10px;
+  flex-shrink: 0;
+  max-width: 100%;
 }
